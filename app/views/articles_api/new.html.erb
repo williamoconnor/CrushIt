@@ -1,0 +1,15 @@
+<%= form_for @article, url: {action: 'create'} do |f| %>
+  <%= label_tag ("Article Name") %>
+  <br/>
+  <%= f.text_field :name %>
+  <br/>
+  <%= label_tag ("Author") %>
+  <br/>
+  <%= f.text_field :author %>
+  <br/>
+  <%= label_tag ("File Name (exactly as it appears, including the extension, e.g. .txt)") %>
+  <br/>
+  <%= text_field :post, :file_name %>
+  <br/>
+  <%= f.submit ("Submit") %>
+<% end %>

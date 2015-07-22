@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  specialty: MyString
+  raing: 1
+  cost: 1
+
+two:
+  specialty: MyString
+  raing: 1
+  cost: 1

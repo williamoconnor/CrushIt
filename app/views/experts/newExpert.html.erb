@@ -1,0 +1,31 @@
+<%= form_for @expert, url: {action: 'createExpert'} do |f| %>
+  <%= label_tag ("User email") %>
+  <br/>
+  <%= text_field :post, :email %>
+  <br/>
+  <%= label_tag ("Specialty1") %>
+  <br/>
+  <%= f.select :specialty, options_for_select([["", "None"], ["Males", "Males"], ["Females", "Females"], ["Gay - Males", "Gay - Females"], ["Black", "Black"], ["Hispanic", "Hispanic"], ["Recently Single", "Recently Single"]]) %>
+  <br/>
+  <%= label_tag ("Specialty2") %>
+  <br/>
+  <%= f.select :specialty2, options_for_select([["", "None"], ["Males", "Males"], ["Females", "Females"], ["Gay - Males", "Gay - Females"], ["Black", "Black"], ["Hispanic", "Hispanic"], ["Recently Single", "Recently Single"]]) %>
+  <br/>
+  <%= label_tag ("Specialty3") %>
+  <br/>
+  <%= f.select :specialty3, options_for_select([["", "None"], ["Males", "Males"], ["Females", "Females"], ["Gay - Males", "Gay - Females"], ["Black", "Black"], ["Hispanic", "Hispanic"], ["Recently Single", "Recently Single"]]) %>
+  <br/>
+  <%= label_tag ("Specialty4") %>
+  <br/>
+  <%= f.select :specialty4, options_for_select([["", "None"], ["Males", "Males"], ["Females", "Females"], ["Gay - Males", "Gay - Females"], ["Black", "Black"], ["Hispanic", "Hispanic"], ["Recently Single", "Recently Single"]]) %>
+  <br/>
+  <%= label_tag ("Facebook ID") %>
+  <br/>
+  <%= f.text_field :fb_pic_link %>
+  <br/>
+  <%= label_tag ("Password") %>
+  <br/>
+  <%= text_field :post, :passcode %>
+  <br/>
+  <%= f.submit ("Submit") %>
+<% end %>

@@ -1,0 +1,2 @@
+module EndedChatsHelper
+end

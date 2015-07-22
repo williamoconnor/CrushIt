@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  userID: 
+  expertID: 
+  refreshed: 1
+
+two:
+  userID: 
+  expertID: 
+  refreshed: 1

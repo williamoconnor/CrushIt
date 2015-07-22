@@ -1,0 +1,25 @@
+<h1>Pay <%= @user.username %></h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Total Correspondences</th>
+      <th>Unpaid Correspondences</th>
+      <th>Amount Owed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @expert.correspondences %></td>
+      <td><%= @expert.unpaid_correspondences %></td>
+      <td><%= @amt %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= form_tag url: {action: 'submitPayment'} do %>
+  <%= label_tag ("Code") %>
+  <br/>
+  <%= text_field :post, :kitty %>
+  <%= submit_tag ("Pay") %>
+<% end %>
