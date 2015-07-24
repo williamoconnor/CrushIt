@@ -42,6 +42,42 @@ class ExpertsController < ApplicationController
     end
   end
 
+  def all
+    onlineExpertsE = Expert.where("availability = ?", true)
+    offlineExpertsE = Expert.where("availability = ?", false)
+
+    onlineExperts = Array.new
+    offlineExperts = Array.new
+
+    onlineExpertsE.each do |expert|
+      user = User.where("expertID = ?", expert.id)
+      expertMap = {"expert" => expert, "user" => user}
+      onlineExperts.push(expertMap)
+    end
+    offlineExpertsE.each do |expert|
+      user = User.where("expertID = ?", expert.id)
+      expertMap = {"expert" => expert, "user" => user}
+      offlineExperts.push(expertMap)
+    end
+
+    if onlineExperts || offlineExperts
+      result = {"online" => onlineExperts, "offline" => offlineExperts}
+      render :json => result.to_json, :status => 200
+    else
+      error_str = ""
+
+      onlineExperts.errors.each{|attr, msg|           
+        error_str += "#{attr} - #{msg},"
+      }
+      offlineExperts.errors.each{|attr, msg|           
+        error_str += "#{attr} - #{msg},"
+      }
+                
+      e = Error.new(:status => 400, :message => error_str)
+      render :json => e.to_json, :status => 400
+    end
+  end
+
   def updateAvailability
     expert = Expert.find(params[:expertID])
 

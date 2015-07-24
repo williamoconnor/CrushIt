@@ -21,8 +21,8 @@ test:
 production:
   adapter: mysql2
   encoding: utf8
-  database: HelpMeTextDB
-  username: root
-  password: my_password
+  database: bthomas_HelpMeText
+  username: bthomas_woconnor
+  password: Wildbill18!
   pool: 5
   timeout: 5000

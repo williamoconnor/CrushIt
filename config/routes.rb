@@ -7,6 +7,7 @@ HelpMeText::Application.routes.draw do
   post "/experts/create" => 'experts#createExpert'
   get "/experts/pay/:expertID" => 'experts#payExpert'
   post "/experts/pay/:expertID" => 'experts#submitPayment'
+  get "/experts/all" => 'experts#all'
 
   post "/users/signup" => 'users#signup'
   post "/users/signin" => 'users#signin'
