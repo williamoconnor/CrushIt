@@ -7,10 +7,6 @@ class UsersController < ApplicationController
   		user = User.new(user_params)
       user.correspondences = 0
       user.sharedToFB = false
-      if !user_params.has_key?('fb_id')
-        user.fb_id = "none"
-      end
-      # puts user 
 
   		if user.save
           render :json => user.to_json, :status => 200
