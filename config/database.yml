@@ -5,8 +5,8 @@ development:
   adapter: postgresql
   encoding: unicode
   database: helpmetext
-  username: woconnor
-  password: wildbill18
+  username: williamoconnor
+  password: bill
   pool: 5
   timeout: 5000
 
@@ -22,7 +22,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: helpmetext
+  database: dflq09h4iokiu3
   username: ylmlhxiahbihxc
   password: 7HfRwkuEAPGYJ-_liZk5Pnu4JT
   pool: 5
