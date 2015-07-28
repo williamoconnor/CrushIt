@@ -16,7 +16,7 @@ HelpMeText::Application.routes.draw do
   get "/users/user/qb/:qbID" => 'users#getQBUser'
   get "/users/user/:id" => 'users#getUser'
   
-  get "/articles/" => 'articles_api#get_all_articles'
+  get "/articles" => 'articles_api#get_all_articles'
   get "/articles/article/:articleID" => 'articles_api#get_article'
   post "/articles/create" => 'articles_api#create'
   get "/articles/new" => 'articles_api#new'
