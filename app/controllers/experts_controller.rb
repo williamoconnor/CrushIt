@@ -50,7 +50,7 @@ class ExpertsController < ApplicationController
     offlineExperts = Array.new
 
     onlineExpertsE.each do |expert|
-      user = User.where("expertID = ?", expert.id)
+      user = User.where("expertID = ?", expert.id).first
       expertMap = {"expert" => expert, "user" => user}
       onlineExperts.push(expertMap)
     end
