@@ -14,6 +14,7 @@ HelpMeText::Application.routes.draw do
   post "/users/buy" => 'users#purchaseCorrespondence'
   get "/users/" => 'users#getUsers'
   get "/users/user/qb/:qbID" => 'users#getQBUser'
+  get "/users/user/qb/delete/:qbID" => 'users#deleteQBUserFromQB'
   get "/users/user/:id" => 'users#getUser'
   
   get "/articles" => 'articles_api#get_all_articles'
