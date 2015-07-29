@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     password = params[:password]
 
     user = User.find_by email: email
-    if user && user.password = password
+    if user && user.password == password
       result = {"result" => "success", "user" => user}
   		render :json => result.to_json, :status => 200
   	elsif request.post?
@@ -75,6 +75,31 @@ class UsersController < ApplicationController
       e = Error.new(:status => 400, :message => error_str)
       render :json => e.to_json, :status => 400
     end
+  end
+
+  def changePassword
+    user = User.find_by email: params[:email]
+
+    if user
+      user.password = params[:password]
+      if user.save
+        result = {"result" => "success"}
+        render :json => result, :status => 200
+      else
+        error_str = ""
+
+        user.errors.each{|attr, msg|           
+          error_str += "#{attr} - #{msg},"
+        }
+                  
+        e = Error.new(:status => 400, :message => error_str)
+        render :json => e.to_json, :status => 400
+      end
+    else
+      result = {"result" => "failure", "reason" => "No user found with that email"}
+      render :json => result, :status => 405
+    end
+
   end
 
   def getUser
