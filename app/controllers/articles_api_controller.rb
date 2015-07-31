@@ -13,7 +13,7 @@ class ArticlesApiController < ApplicationController
   end
 
   def get_article
-  	article = Article.find(params[:articleID])
+  	article = Article.find(params[:article_id])
 
     if article
       render :file => article.file_path

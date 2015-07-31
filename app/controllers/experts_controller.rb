@@ -1,7 +1,7 @@
 class ExpertsController < ApplicationController
   def show
-  	expert = Expert.find(params[:expertID])
-    user = User.where("expertID = ?", params[:expertID]).first
+  	expert = Expert.find(params[:expert_id])
+    user = User.where("expert_id = ?", params[:expert_id]).first
 
     if expert && user
       result = {"expert" => expert, "user" => user}
@@ -22,7 +22,7 @@ class ExpertsController < ApplicationController
   	experts = Expert.where("specialty = ? OR specialty2 = ? OR specialty3 = ? OR specialty4 = ?", params[:specialty], params[:specialty], params[:specialty], params[:specialty])
   	expertsArray = Array.new
   	experts.each do |exp|
-  		user = User.where("expertID = ?", exp[:id])[0]
+  		user = User.where("expert_id = ?", exp[:id])[0]
   		person = {"user" => user, "expert" => exp}
   		expertsArray.push(person)
   	end
@@ -50,14 +50,18 @@ class ExpertsController < ApplicationController
     offlineExperts = Array.new
 
     onlineExpertsE.each do |expert|
-      user = User.where("expertID = ?", expert.id).first
-      expertMap = {"expert" => expert, "user" => user}
-      onlineExperts.push(expertMap)
+      user = User.where("expert_id = ?", expert.id.to_s).first
+      if user
+        expertMap = {"expert" => expert, "user" => user}
+        onlineExperts.push(expertMap)
+      end
     end
     offlineExpertsE.each do |expert|
-      user = User.where("expertID = ?", expert.id)
-      expertMap = {"expert" => expert, "user" => user}
-      offlineExperts.push(expertMap)
+      user = User.where("expert_id = ?", expert.id.to_s).first
+      if user
+        expertMap = {"expert" => expert, "user" => user}
+        offlineExperts.push(expertMap)
+      end
     end
 
     if onlineExperts || offlineExperts
@@ -79,7 +83,7 @@ class ExpertsController < ApplicationController
   end
 
   def updateAvailability
-    expert = Expert.find(params[:expertID])
+    expert = Expert.find(params[:expert_id])
 
     expert.availability = params[:available]
 
@@ -105,14 +109,15 @@ class ExpertsController < ApplicationController
   def createExpert
     if params[:post][:passcode] == 'password'
       @expert = Expert.new()
-      @expert.specialty = params[:expert][:specialty]
-      @expert.specialty2 = params[:expert][:specialty2]
-      @expert.specialty3 = params[:expert][:specialty3]
-      @expert.specialty4 = params[:expert][:specialty4]
+      @expert.specialty = ""
+      @expert.specialty2 = ""
+      @expert.specialty3 = ""
+      @expert.specialty4 = ""
+      @expert.bio = params[:expert][:bio]
       @expert.fb_pic_link = params[:expert][:fb_pic_link]
       @expert.rating = 0
       @expert.cost = 1
-      @expert.totalRating = 0
+      @expert.total_rating = 0
       @expert.correspondences = 0
       @expert.unpaid_correspondences = 0
       @expert.availability = false
@@ -120,7 +125,7 @@ class ExpertsController < ApplicationController
       if @expert.save
           user = User.find_by email: params[:post][:email]
           if user
-            user.expertID = @expert.id
+            user.expert_id = @expert.id
             user.save
             render :text => "Successfully added expert to user #{user.username}"
           else
@@ -143,8 +148,8 @@ class ExpertsController < ApplicationController
   end
 
   def payExpert
-    @expert = Expert.find(params[:expertID])
-    @user = User.where("expertID = ?", params[:expertID]).first
+    @expert = Expert.find(params[:expert_id])
+    @user = User.where("expert_id = ?", params[:expert_id]).first
 
     if !@expert.blank?
       @amt = @expert.unpaid_correspondences * @expert.cost
@@ -155,16 +160,21 @@ class ExpertsController < ApplicationController
   end
 
   def submitPayment
-    @expert = Expert.find(params[:expertID])
-    @user = User.where("expertID = ?", params[:expertID]).first
+    @expert = Expert.find(params[:expert_id])
+    @user = User.where("expert_id = ?", params[:expert_id]).first
 
     submittedCode = params[:post][:kitty]
     code = "123456789"
 
-    @expert.correspondences += @expert.unpaid_correspondences
-    @expert.unpaid_correspondences = 0
+    correctCode = false
 
-    if @expert.save
+    if submittedCode == code
+      @expert.correspondences += @expert.unpaid_correspondences
+      @expert.unpaid_correspondences = 0
+      correctCode = true
+    end
+
+    if @expert.save && correctCode
       render :text => "Successfully paid expert #{@user.username}"
     else
       error_str = ""
@@ -181,7 +191,7 @@ class ExpertsController < ApplicationController
 
   private
     def expertParams
-      params.require(:expert).permit(:specialty, :specialty2, :specialty3, :specialty4, :fb_pic_link)
+      params.require(:expert).permit(:specialty, :specialty2, :specialty3, :specialty4, :bio, :fb_pic_link)
     end
 
 

@@ -1,14 +1,14 @@
 class ChatsController < ApplicationController
 	def new
 		chat = Chat.new()
-		chat.userID = params[:correspondence][:userID]
-		chat.expertID = params[:correspondence][:expertID]
+		chat.user_id = params[:correspondence][:user_id]
+		chat.expert_id = params[:correspondence][:expert_id]
 		chat.renewals = 0
 		chat.active = true
 		chat.rating = 0
 		chat.dialog_id = ""
 
-		existingChat = Chat.where("active = ? AND userID = ? AND expertID = ?", true, chat.userID, chat.expertID)
+		existingChat = Chat.where("active = ? AND userID = ? AND expertID = ?", true, chat.user_id, chat.expert_id)
 		if !existingChat.blank?
 			result = {"new" => false, "chat" => chat}
 			render :json => result.to_json, :status => 200
@@ -31,11 +31,11 @@ class ChatsController < ApplicationController
 	end
 
 	def endChat
-		chat = Chat.find(params[:chatID])
+		chat = Chat.find(params[:chat_id])
 		chat.active = false
-		chat.pendingRenewal = false
+		chat.pending_renewal = false
 
-		expert = Expert.where("id = ?", chat.expertID)
+		expert = Expert.where("id = ?", chat.expert_id)
 		expert.correspondences += chat.renewals + 1
 
 		if chat.save && expert.save
@@ -55,14 +55,14 @@ class ChatsController < ApplicationController
 
 	def submitRating
 	  	if request.post?
-	  		chat = Chat.find(ratingParams[:chatID])
+	  		chat = Chat.find(ratingParams[:chat_id])
 	        chat.rating = ratingParams[:rating]
 
-	        expert = Expert.find(chat.expertID)
-	        rating = expert.rating * expert.totalRating
+	        expert = Expert.find(chat.expert_id)
+	        rating = expert.rating * expert.total_rating
 	        rating += ratingParams[:rating]
-	        expert.totalRating += 1
-	        expert.rating = rating/expert.totalRating
+	        expert.total_rating += 1
+	        expert.rating = rating/expert.total_rating
 	        expert.correspondence += 1
 
 	  		if chat.save && expert.save
@@ -207,10 +207,10 @@ class ChatsController < ApplicationController
 
 	private
 		def endedChatParams
-			params.require(:chat).permit(:expertID, :userID, :rating)
+			params.require(:chat).permit(:expert_id, :user_id, :rating)
 		end
 
 		def ratingParams
-			params.require(:rating).permit(:endedChatID, :rating)
+			params.require(:rating).permit(:endedChat_id, :rating)
 		end
 end

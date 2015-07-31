@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150721121142) do
+ActiveRecord::Schema.define(version: 20150731233103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "active_correspondences", force: true do |t|
-    t.string   "userID"
-    t.string   "expertID"
+    t.string   "user_id"
+    t.string   "expert_id"
     t.integer  "refreshed"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20150721121142) do
   end
 
   create_table "chats", force: true do |t|
-    t.integer  "userID"
-    t.integer  "expertID"
+    t.integer  "user_id"
+    t.integer  "expert_id"
     t.integer  "renewals"
     t.integer  "rating"
     t.boolean  "active"
@@ -45,8 +45,8 @@ ActiveRecord::Schema.define(version: 20150721121142) do
   end
 
   create_table "ended_chats", force: true do |t|
-    t.integer  "expertID"
-    t.integer  "userID"
+    t.integer  "expert_id"
+    t.integer  "user_id"
     t.integer  "rating"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -58,14 +58,15 @@ ActiveRecord::Schema.define(version: 20150721121142) do
     t.integer  "cost"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "totalRating"
+    t.integer  "total_rating"
     t.string   "specialty2"
     t.string   "specialty3"
     t.string   "specialty4"
     t.integer  "correspondences"
-    t.string   "fb_pic_link"
     t.boolean  "availability"
     t.integer  "unpaid_correspondences"
+    t.text     "bio"
+    t.string   "photo_file_path"
   end
 
   create_table "specialties", force: true do |t|
@@ -81,13 +82,13 @@ ActiveRecord::Schema.define(version: 20150721121142) do
     t.string   "gender"
     t.string   "interest"
     t.string   "password"
-    t.string   "qbID"
-    t.string   "expertID"
+    t.string   "qb_id"
+    t.string   "expert_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password_hash"
     t.integer  "correspondences"
-    t.boolean  "sharedToFB"
+    t.boolean  "shared_to_fb"
     t.string   "qb_code"
   end
 

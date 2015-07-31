@@ -1,30 +1,18 @@
 <p>If you have not already, use the iOS app to create a user account. Then, enter the same email here, and expert status will be added to the account.</p>
 <%= form_for @expert, url: {action: 'createExpert'} do |f| %>
-  <%= label_tag ("User email") %>
+  <%= f.label :email, "User email" %>
   <br/>
   <%= text_field :post, :email %>
   <br/>
-  <%= label_tag ("Specialty1") %>
+  <%= f.label :bio, "Expert Bio" %>
   <br/>
-  <%= f.select :specialty, options_for_select([["", "None"], ["Males", "Males"], ["Females", "Females"], ["Gay - Males", "Gay - Females"], ["Black", "Black"], ["Hispanic", "Hispanic"], ["Recently Single", "Recently Single"]]) %>
+  <%= text_area :expert, :bio, cols: 40, rows: 10, :maxlength => 150 %>
   <br/>
-  <%= label_tag ("Specialty2") %>
+  <%= f.label :photo_label, "Profile Picture" %>
   <br/>
-  <%= f.select :specialty2, options_for_select([["", "None"], ["Males", "Males"], ["Females", "Females"], ["Gay - Males", "Gay - Females"], ["Black", "Black"], ["Hispanic", "Hispanic"], ["Recently Single", "Recently Single"]]) %>
+  <%= f.file_field :photo %>
   <br/>
-  <%= label_tag ("Specialty3") %>
-  <br/>
-  <%= f.select :specialty3, options_for_select([["", "None"], ["Males", "Males"], ["Females", "Females"], ["Gay - Males", "Gay - Females"], ["Black", "Black"], ["Hispanic", "Hispanic"], ["Recently Single", "Recently Single"]]) %>
-  <br/>
-  <%= label_tag ("Specialty4") %>
-  <br/>
-  <%= f.select :specialty4, options_for_select([["", "None"], ["Males", "Males"], ["Females", "Females"], ["Gay - Males", "Gay - Females"], ["Black", "Black"], ["Hispanic", "Hispanic"], ["Recently Single", "Recently Single"]]) %>
-  <br/>
-  <%= label_tag ("Facebook ID") %>
-  <br/>
-  <%= f.text_field :fb_pic_link %>
-  <br/>
-  <%= label_tag ("Password") %>
+  <%= f.label :password, "Password - You should have received a password from CrushIt" %>
   <br/>
   <%= text_field :post, :passcode %>
   <br/>

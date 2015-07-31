@@ -27,14 +27,14 @@ class EndedChatsController < ApplicationController
 
 	def submitRating
 	  	if request.post?
-	  		chat = EndedChat.find(ratingParams[:endedChatID])
+	  		chat = EndedChat.find(ratingParams[:ended_chat_id])
 	        chat.rating = ratingParams[:rating]
 
-	        expert = Expert.find(chat.expertID)
-	        rating = expert.rating * expert.totalRating
+	        expert = Expert.find(chat.expert_id)
+	        rating = expert.rating * expert.total_rating
 	        rating += ratingParams[:rating]
-	        expert.totalRating += 1
-	        expert.rating = rating/expert.totalRating
+	        expert.total_rating += 1
+	        expert.rating = rating/expert.total_rating
 	        expert.correspondence += 1
 
 	  		if chat.save && expert.save
@@ -59,10 +59,10 @@ class EndedChatsController < ApplicationController
 
 	private
 		def endedChatParams
-			params.require(:chat).permit(:expertID, :userID, :rating)
+			params.require(:chat).permit(:expert_id, :user_id, :rating)
 		end
 
 		def ratingParams
-			params.require(:rating).permit(:endedChatID, :rating)
+			params.require(:rating).permit(:ended_chat_id, :rating)
 		end
 end
