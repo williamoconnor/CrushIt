@@ -112,7 +112,7 @@ class UsersController < ApplicationController
     else
       error_str = ""
 
-      user.errors.each{|attr, msg|     å      
+      user.errors.each{|attr, msg|    
         error_str += "#{attr} - #{msg},"
       }
                 
