@@ -1,20 +1,37 @@
-<p>If you have not already, use the iOS app to create a user account. Then, enter the same email here, and expert status will be added to the account.</p>
-<%= form_for @expert, url: {action: 'createExpert'} do |f| %>
-  <%= f.label :email, "User email" %>
-  <br/>
-  <%= text_field :post, :email %>
-  <br/>
-  <%= f.label :bio_label, "Expert Bio" %>
-  <br/>
-  <%= text_area :expert, :bio, cols: 40, rows: 10, :maxlength => 150 %>
-  <br/>
-  <%= f.label :photo_label, "Profile Picture" %>
-  <br/>
-  <%= f.file_field :photo %>
-  <br/>
-  <%= f.label :password, "Password - You should have received a password from CrushIt" %>
-  <br/>
-  <%= text_field :post, :passcode %>
-  <br/>
-  <%= f.submit ("Submit") %>
-<% end %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div class="container">  
+      <div class="title">
+        <h1 id="crush-it-title"> CrushIt! </h1>
+        <p>Expert Sign Up Form</p>
+      </div>
+      <div class="instructions">
+        <h3>Instructions</h3>
+        <p>If you have not already, use the iOS app to create a user account. Then, enter the same email here, and expert status will be added to the account.</p>
+      </div>
+      <%= form_for @expert, url: {action: 'createExpert'}, :html => {:class => 'form'} do |f| %>
+        <%= f.label :email, "User email", :class => 'form-label' %>
+        <br/>
+        <%= text_field :post, :email, :class => 'form-item' %>
+        <br/>
+        <%= f.label :bio_label, "Expert Bio", :class => 'form-label' %>
+        <br/>
+        <%= text_area :expert, :bio, cols: 40, rows: 10, :maxlength => 250, :class => 'form-item' %>
+        <br/>
+        <%= f.label :photo_label, "Profile Picture", :class => 'form-label' %>
+        <br/>
+        <%= f.file_field :photo, :class => 'form-item' %>
+        <br/>
+        <%= f.label :password, "Password - You should have received a password from CrushIt", :class => 'form-label' %>
+        <br/>
+        <%= text_field :post, :passcode, :class => 'form-item' %>
+        <br/>
+        <%= f.submit ("Submit"), :class => 'form-item', :id => 'submit-button' %>
+      <% end %>
+    </div>
+  </body>
+</html>

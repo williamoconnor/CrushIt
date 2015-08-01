@@ -143,7 +143,7 @@ class ExpertsController < ApplicationController
           render :json => e.to_json, :status => 400
       end    
     else
-      render :text => "<h2>Not Authorized. Check that you have the correct password - you said #{params[:post]}</h2>".html_safe, :status => 400
+      render :text => "<h2>Not Authorized. Check that you have the correct password</h2>".html_safe, :status => 400
     end
   end
 

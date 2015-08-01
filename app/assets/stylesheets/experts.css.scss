@@ -1,3 +1,81 @@
 // Place all the styles related to the experts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+	text-align:center;
+}
+
+.container {
+	width: 80%;
+	margin: 15px auto;
+	font-family: 'Raleway';
+}
+
+.title {
+	color: #3AACF2;
+	margin: 20px;
+
+	#crush-it-title{
+		font-size: 100px;
+		margin-bottom: 0;
+	}
+	p {
+		font-size: 24px;
+	}
+}
+
+
+.instructions {
+	margin: 0;
+	padding: 5px 20px 20px;
+	background-color: #3AACF2;
+	color: white;
+	font-size: 24px;
+}
+
+.form {
+	margin: 30px auto;
+}
+
+.form-item {
+	margin-top: 10px;
+	margin-bottom: 30px;
+}
+
+#post_email, #post_passcode, #expert_bio {
+	border: 1px solid LightSteelBlue;
+	border-radius: 6px;
+
+	&:active{
+		outline-color: #3AACF2;
+	}
+}
+
+#post_email {
+	width: 30%;
+}
+
+#post_passcode {
+	width: 15%;
+}
+
+#submit-button {
+	width: 140px;
+	height: 40px;
+	border: 1px solid #3AACF2;
+	border-radius: 8px;
+	background-color: white;
+	color: #3AACF2;
+	font-family: 'Raleway';
+	font-size: 18px;
+	outline: 0;
+}
+
+#submit-button:hover {
+	background-color: #CEE4F2;
+}
+
+#submit-button:active {
+	background-color: #9DD2F2;
+}
