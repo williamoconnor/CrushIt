@@ -18,6 +18,34 @@ class ExpertsController < ApplicationController
     end
   end
 
+  def getProfPic
+    expert = Expert.find(params[:expert_id])
+    medium = expert.avatar.url(:medium, false)
+    thumb = expert.avatar.url(:thumb, false)
+
+    if expert && medium && thumb
+      send_file medium, type: 'image/png', disposition: 'inline'
+      # render :file => expert.avatar.url(:medium)
+    else
+      error_str = ""
+
+      expert.errors.each{|attr, msg|           
+        error_str += "#{attr} - #{msg},"
+      }
+
+      medium.errors.each{|attr, msg|           
+        error_str += "#{attr} - #{msg},"
+      }
+
+      thumb.errors.each{|attr, msg|           
+        error_str += "#{attr} - #{msg},"
+      }
+                
+      e = Error.new(:status => 400, :message => error_str)
+      render :json => e.to_json, :status => 400
+    end
+  end
+
   def list
   	experts = Expert.where("specialty = ? OR specialty2 = ? OR specialty3 = ? OR specialty4 = ?", params[:specialty], params[:specialty], params[:specialty], params[:specialty])
   	expertsArray = Array.new
@@ -108,13 +136,7 @@ class ExpertsController < ApplicationController
 
   def createExpert
     if params[:post][:passcode] == 'password'
-      @expert = Expert.new()
-      @expert.specialty = ""
-      @expert.specialty2 = ""
-      @expert.specialty3 = ""
-      @expert.specialty4 = ""
-      @expert.bio = params[:expert][:bio]
-      @expert.fb_pic_link = params[:expert][:fb_pic_link]
+      @expert = Expert.new(expertParams)
       @expert.rating = 0
       @expert.cost = 1
       @expert.total_rating = 0
@@ -191,7 +213,7 @@ class ExpertsController < ApplicationController
 
   private
     def expertParams
-      params.require(:expert).permit(:specialty, :specialty2, :specialty3, :specialty4, :bio, :fb_pic_link)
+      params.require(:expert).permit(:specialty, :specialty2, :specialty3, :specialty4, :bio, :avatar)
     end
 
 

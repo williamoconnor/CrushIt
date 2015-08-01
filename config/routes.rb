@@ -8,6 +8,7 @@ HelpMeText::Application.routes.draw do
   get "/experts/pay/:expert_id" => 'experts#payExpert'
   post "/experts/pay/:expert_id" => 'experts#submitPayment'
   get "/experts/all" => 'experts#all'
+  get "/experts/expert/:expert_id/profile-picture" => 'experts#getProfPic'
 
   post "/users/signup" => 'users#signup'
   post "/users/signin" => 'users#signin'
