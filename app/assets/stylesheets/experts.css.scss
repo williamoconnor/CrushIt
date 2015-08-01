@@ -46,6 +46,10 @@ body {
 #post_email, #post_passcode, #expert_bio {
 	border: 1px solid LightSteelBlue;
 	border-radius: 6px;
+	font-family: 'Raleway';
+	font-size: 16px;
+	padding-left: 6px;
+	color: #3AACF2;
 
 	&:active{
 		outline-color: #3AACF2;
@@ -54,10 +58,12 @@ body {
 
 #post_email {
 	width: 30%;
+	height: 20px;
 }
 
 #post_passcode {
 	width: 15%;
+	height: 20px;
 }
 
 #submit-button {
