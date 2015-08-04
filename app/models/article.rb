@@ -14,5 +14,4 @@ class Article < ActiveRecord::Base
 
   	validates :name, :uniqueness => true
 
-    attr_accessible :text_file_file_name
 end
