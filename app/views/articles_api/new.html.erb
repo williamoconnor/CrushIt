@@ -5,7 +5,7 @@
   </div>
   <div class="instructions">
     <h3>Instructions</h3>
-    <p>Upload article to be displayed in app.</p>
+    <p>Upload article to be displayed in app. The file that you upload should be a .txt file containing the body of the article</p>
   </div>
   <%= form_for @article, url: {action: 'create'}, :html => {:class => 'form', :multipart => true} do |f| %>
     <%= label_tag ("Article Name") %>

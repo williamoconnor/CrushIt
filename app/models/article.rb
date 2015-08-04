@@ -13,4 +13,6 @@ class Article < ActiveRecord::Base
   	# validates_attachment_file_name :text_file, :matches => /txt\Z/
 
   	validates :name, :uniqueness => true
+
+    attr_accessible :text_file_file_name
 end
