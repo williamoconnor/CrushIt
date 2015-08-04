@@ -1,4 +1,4 @@
-HelpMeText::Application.routes.draw do
+CrushIt::Application.routes.draw do
 
   get "/experts/expert/:expert_id" => 'experts#show'
   get "/experts/list/:specialty" => 'experts#list'
@@ -13,7 +13,7 @@ HelpMeText::Application.routes.draw do
   post "/users/signup" => 'users#signup'
   post "/users/signin" => 'users#signin'
   post "/users/buy" => 'users#purchaseCorrespondence'
-  get "/users/" => 'users#getUsers'
+  get "/users" => 'users#getUsers'
   get "/users/user/qb/:qb_id" => 'users#getQBUser'
   get "/users/user/:email" => 'users#getUser'
   put "/users/user/password" => 'users#changePassword'

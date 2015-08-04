@@ -1,55 +1,55 @@
 class ExpertsController < ApplicationController
   def show
-  	expert = Expert.find(params[:expert_id])
-    user = User.where("expert_id = ?", params[:expert_id]).first
+  	@expert = Expert.find(params[:expert_id])
+    @user = User.where("expert_id = ?", params[:expert_id]).first
 
-    if expert && user
-      result = {"expert" => expert, "user" => user}
+    if @expert && @user
+      result = {"expert" => @expert, "user" => @user}
       render :json => result.to_json, :status => 200
     else
       error_str = ""
 
-      expert.errors.each{|attr, msg|           
+      @expert.errors.each{|attr, msg|           
         error_str += "#{attr} - #{msg},"
       }
                 
-      e = Error.new(:status => 400, :message => error_str)
-      render :json => e.to_json, :status => 400
+      @e = Error.new(:status => 400, :message => error_str)
+      render :json => @e.to_json, :status => 400
     end
   end
 
   def getProfPic
-    expert = Expert.find(params[:expert_id])
-    medium = expert.avatar.url(:medium, false)
+    @expert = Expert.find(params[:expert_id])
+    @medium = expert.avatar.url(:medium, false)
     thumb = expert.avatar.url(:thumb, false)
 
-    if expert && medium && thumb
+    if @expert && @medium && thumb
       send_file medium, type: 'image/png', disposition: 'inline'
       # render :file => expert.avatar.url(:medium)
     else
       error_str = ""
 
-      expert.errors.each{|attr, msg|           
+      @expert.errors.each{|attr, msg|           
         error_str += "#{attr} - #{msg},"
       }
 
-      medium.errors.each{|attr, msg|           
+      @medium.errors.each{|attr, msg|           
         error_str += "#{attr} - #{msg},"
       }
 
-      thumb.errors.each{|attr, msg|           
+      @thumb.errors.each{|attr, msg|           
         error_str += "#{attr} - #{msg},"
       }
                 
-      e = Error.new(:status => 400, :message => error_str)
-      render :json => e.to_json, :status => 400
+      @e = Error.new(:status => 400, :message => error_str)
+      render :json => @e.to_json, :status => 400
     end
   end
 
   def list
-  	experts = Expert.where("specialty = ? OR specialty2 = ? OR specialty3 = ? OR specialty4 = ?", params[:specialty], params[:specialty], params[:specialty], params[:specialty])
-  	expertsArray = Array.new
-  	experts.each do |exp|
+  	@experts = Expert.where("specialty = ? OR specialty2 = ? OR specialty3 = ? OR specialty4 = ?", params[:specialty], params[:specialty], params[:specialty], params[:specialty])
+  	@expertsArray = Array.new
+  	@experts.each do |exp|
   		user = User.where("expert_id = ?", exp[:id])[0]
   		person = {"user" => user, "expert" => exp}
   		expertsArray.push(person)
@@ -61,12 +61,12 @@ class ExpertsController < ApplicationController
     else
       error_str = ""
 
-      experts.errors.each{|attr, msg|           
+      @experts.errors.each{|attr, msg|           
         error_str += "#{attr} - #{msg},"
       }
                 
-      e = Error.new(:status => 400, :message => error_str)
-      render :json => e.to_json, :status => 400
+      @e = Error.new(:status => 400, :message => error_str)
+      render :json => @e.to_json, :status => 400
     end
   end
 
@@ -74,59 +74,59 @@ class ExpertsController < ApplicationController
     onlineExpertsE = Expert.where("availability = ?", true)
     offlineExpertsE = Expert.where("availability = ?", false)
 
-    onlineExperts = Array.new
-    offlineExperts = Array.new
+    @onlineExperts = Array.new
+    @offlineExperts = Array.new
 
     onlineExpertsE.each do |expert|
       user = User.where("expert_id = ?", expert.id.to_s).first
       if user
         expertMap = {"expert" => expert, "user" => user}
-        onlineExperts.push(expertMap)
+        @onlineExperts.push(expertMap)
       end
     end
     offlineExpertsE.each do |expert|
       user = User.where("expert_id = ?", expert.id.to_s).first
       if user
         expertMap = {"expert" => expert, "user" => user}
-        offlineExperts.push(expertMap)
+        @offlineExperts.push(expertMap)
       end
     end
 
     if onlineExperts || offlineExperts
-      result = {"online" => onlineExperts, "offline" => offlineExperts}
+      result = {"online" => @onlineExperts, "offline" => @offlineExperts}
       render :json => result.to_json, :status => 200
     else
       error_str = ""
 
-      onlineExperts.errors.each{|attr, msg|           
+      @onlineExperts.errors.each{|attr, msg|           
         error_str += "#{attr} - #{msg},"
       }
-      offlineExperts.errors.each{|attr, msg|           
+      @offlineExperts.errors.each{|attr, msg|           
         error_str += "#{attr} - #{msg},"
       }
                 
-      e = Error.new(:status => 400, :message => error_str)
-      render :json => e.to_json, :status => 400
+      @e = Error.new(:status => 400, :message => error_str)
+      render :json => @e.to_json, :status => 400
     end
   end
 
   def updateAvailability
-    expert = Expert.find(params[:expert_id])
+    @expert = Expert.find(params[:expert_id])
 
-    expert.availability = params[:available]
+    @expert.availability = params[:available]
 
     if expert.save
-        render :json => expert.to_json, :status => 200
+        render :json => @expert.to_json, :status => 200
     else
         error_str = ""
 
-        expert.errors.each{|attr, msg|           
+        @expert.errors.each{|attr, msg|           
           error_str += "#{attr} - #{msg},"
         }
         puts error_str
                   
-        e = Error.new(:status => 400, :message => error_str)
-        render :json => e.to_json, :status => 400
+        @e = Error.new(:status => 400, :message => error_str)
+        render :json => @e.to_json, :status => 400
     end
   end
 
@@ -145,7 +145,7 @@ class ExpertsController < ApplicationController
       @expert.availability = false
 
       if @expert.save
-          user = User.find_by email: params[:post][:email]
+          user = User.find_by email: params[:expert][:email]
           if user
             user.expert_id = @expert.id
             user.save
@@ -161,8 +161,8 @@ class ExpertsController < ApplicationController
           }
           puts error_str
                     
-          e = Error.new(:status => 400, :message => error_str)
-          render :json => e.to_json, :status => 400
+          @e = Error.new(:status => 400, :message => error_str)
+          render :json => @e.to_json, :status => 400
       end    
     else
       render :text => "<h2>Not Authorized. Check that you have the correct password</h2>".html_safe, :status => 400
@@ -206,14 +206,14 @@ class ExpertsController < ApplicationController
       }
       puts error_str
                 
-      e = Error.new(:status => 400, :message => error_str)
-      render :json => e.to_json, :status => 400
+      @e = Error.new(:status => 400, :message => error_str)
+      render :json => @e.to_json, :status => 400
     end
   end
 
   private
     def expertParams
-      params.require(:expert).permit(:specialty, :specialty2, :specialty3, :specialty4, :bio, :avatar)
+      params.require(:expert).permit(:specialty, :specialty2, :specialty3, :specialty4, :bio, :avatar, :email)
     end
 
 

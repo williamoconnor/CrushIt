@@ -1,4 +1,6 @@
 class Expert < ActiveRecord::Base
+	validates :email, :uniqueness => true
+	
 	has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" },
      :default_url => ":rails_root/public/system/avatars/:style/missing.png",
      :url  => ":rails_root/app/assets/images/:id/:style_:filename",

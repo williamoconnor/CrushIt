@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-HelpMeText::Application.load_tasks
+CrushIt::Application.load_tasks

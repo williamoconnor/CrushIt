@@ -2,6 +2,7 @@ require 'bcrypt'
 
 class User < ActiveRecord::Base
   include BCrypt
+  validates :email, :uniqueness => true
 
   def password
     @password ||= Password.new(password_hash)

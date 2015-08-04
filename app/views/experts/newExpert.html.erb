@@ -10,7 +10,7 @@
   <%= form_for @expert, url: {action: 'createExpert'}, :html => {:class => 'form', :multipart => true} do |f| %>
     <%= f.label :email, "User email", :class => 'form-label' %>
     <br/>
-    <%= text_field :post, :email, :class => 'form-item' %>
+    <%= text_field :expert, :email, :class => 'form-item' %>
     <br/>
     <%= f.label :bio_label, "Expert Bio", :class => 'form-label' %>
     <br/>
