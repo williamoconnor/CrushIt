@@ -11,3 +11,35 @@
  *= require_self
  *= require_tree .
  */
+
+ body {
+	text-align:center;
+}
+
+.container {
+	width: 80%;
+	margin: 15px auto;
+	font-family: 'Raleway';
+}
+
+.title {
+	color: #3AACF2;
+	margin: 20px;
+}
+
+.title >#crush-it-title{
+		font-size: 100px;
+		margin-bottom: 0;
+	}
+.title > p {
+	font-size: 24px;
+}
+
+.form {
+	margin: 30px auto;
+}
+
+.form-item {
+	margin-top: 10px;
+	margin-bottom: 30px;
+}

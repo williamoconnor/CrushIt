@@ -1,15 +1,29 @@
-<%= form_for @article, url: {action: 'create'} do |f| %>
-  <%= label_tag ("Article Name") %>
-  <br/>
-  <%= f.text_field :name %>
-  <br/>
-  <%= label_tag ("Author") %>
-  <br/>
-  <%= f.text_field :author %>
-  <br/>
-  <%= label_tag ("File Name (exactly as it appears, including the extension, e.g. .txt)") %>
-  <br/>
-  <%= text_field :post, :file_name %>
-  <br/>
-  <%= f.submit ("Submit") %>
-<% end %>
+<div class="container">  
+  <div class="title">
+    <h1 id="crush-it-title"> CrushIt! </h1>
+    <p>New Article Form</p>
+  </div>
+  <div class="instructions">
+    <h3>Instructions</h3>
+    <p>Upload article to be displayed in app.</p>
+  </div>
+  <%= form_for @article, url: {action: 'create'}, :html => {:class => 'form', :multipart => true} do |f| %>
+    <%= label_tag ("Article Name") %>
+    <br/>
+    <%= f.text_field :name, :class => 'form-item' %>
+    <br/>
+    <%= label_tag ("Author") %>
+    <br/>
+    <%= f.text_field :author, :class => 'form-item' %>
+    <br/>
+    <%= f.label :text_file_label, "Article Text File (must be .txt)", :class => 'form-label' %>
+    <br/>
+    <%= f.file_field :text_file, :class => 'form-item' %>
+    <br/>
+    <%= f.label :password, "Password", :class => 'form-label' %>
+    <br/>
+    <%= text_field :post, :passcode, :class => 'form-item' %>
+    <br/>
+    <%= f.submit ("Submit"), :class => 'form-item', :id => 'submit-button' %>
+  <% end %>
+</div>

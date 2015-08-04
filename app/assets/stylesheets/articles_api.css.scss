@@ -1,3 +1,32 @@
 // Place all the styles related to the Articles_API controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#submit-button {
+	width: 140px;
+	height: 40px;
+	border: 1px solid #3AACF2;
+	border-radius: 8px;
+	background-color: white;
+	color: #3AACF2;
+	font-family: 'Raleway';
+	font-size: 18px;
+	outline: 0;
+}
+
+#article_name, #article_author, #post_passcode {
+	border: 1px solid LightSteelBlue;
+	border-radius: 6px;
+	font-family: 'Raleway';
+	font-size: 16px;
+	padding-left: 6px;
+	color: #3AACF2;
+
+	&:active{
+		outline-color: #3AACF2;
+	}
+}
+
+.article-text {
+	text-align: left;
+}

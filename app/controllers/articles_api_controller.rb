@@ -15,9 +15,7 @@ class ArticlesApiController < ApplicationController
   def get_article
   	@article = Article.find(params[:article_id])
 
-    if @article
-      render :file => @article.file_path
-    else
+    if !@article
       error_str = ""
 
       article.errors.each{|attr, msg|           
@@ -36,23 +34,29 @@ class ArticlesApiController < ApplicationController
   
   def create
 
-  	@article = Article.new do |a|
-  		a.name = params[:article][:name]
-      a.author = params[:article][:author]
-      a.file_path = "articles/#{params[:post][:file_name]}"
-  	end
+    if params[:post][:passcode] == "password"
+      @article = Article.new(article_params)
 
-  	if @article.save
-      render :text => "Alomst done! Send the file to Will, and he will upload it to the server (that feature will be added to this page shortly)"
+      # read the text, save as body attribute
+      if params[:article][:text_file] #need a better check
+        # file = File.open(params[:article][:text_file], "rb")
+        @article.body = params[:article][:text_file].read
+      end
+
+      if @article.save
+        render :text => "Successfully uploaded article"
+      else
+        error_str = ""
+
+        @article.errors.each{|attr, msg|           
+          error_str += "#{attr} - #{msg},"
+        }
+                  
+        @e = ActiveModel::Errors.new(:status => 400, :message => error_str)
+        render :json => {"result" => "Failed to create article", "article" => @article.body}
+      end
     else
-      error_str = ""
-
-      article.errors.each{|attr, msg|           
-        error_str += "#{attr} - #{msg},"
-      }
-                
-      @e = Error.new(:status => 400, :message => error_str)
-      render :json => @e.to_json, :status => 400
+      render :text => "<h2>Not Authorized. Check that you have the correct password</h2>".html_safe, :status => 400
     end
   end
 
@@ -62,6 +66,6 @@ class ArticlesApiController < ApplicationController
 
   private
     def article_params
-      params.require(:article).permit(:name, :body)
+      params.require(:article).permit(:name, :author, :text_file)
     end
 end

@@ -8,8 +8,8 @@ class Expert < ActiveRecord::Base
   	validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   	validates :avatar, :attachment_presence => true
-	validates_with AttachmentPresenceValidator, :attributes => :avatar
-	validates_with AttachmentSizeValidator, :attributes => :avatar, :less_than => 1.megabytes
+	  validates_with AttachmentPresenceValidator, :attributes => :avatar
+	  validates_with AttachmentSizeValidator, :attributes => :avatar, :less_than => 1.megabytes
 
   	# Validate filename
   	validates_attachment_file_name :avatar, :matches => [/png\Z/, /jpeg\Z/]
