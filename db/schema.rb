@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150804125356) do
+ActiveRecord::Schema.define(version: 20150807130614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 20150804125356) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "email"
+    t.integer  "max_load"
+    t.boolean  "featured"
   end
 
   create_table "specialties", force: true do |t|
@@ -99,10 +101,6 @@ ActiveRecord::Schema.define(version: 20150804125356) do
     t.integer  "correspondences"
     t.boolean  "shared_to_fb"
     t.string   "qb_code"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
   end
 
 end

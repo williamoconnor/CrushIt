@@ -46,7 +46,7 @@ class ExpertsController < ApplicationController
     end
   end
 
-  def list
+  def listFeatured
   	@experts = Expert.where("specialty = ? OR specialty2 = ? OR specialty3 = ? OR specialty4 = ?", params[:specialty], params[:specialty], params[:specialty], params[:specialty])
   	@expertsArray = Array.new
   	@experts.each do |exp|
@@ -70,7 +70,7 @@ class ExpertsController < ApplicationController
     end
   end
 
-  def all
+  def allFeatured
     onlineExpertsE = Expert.where("availability = ?", true)
     offlineExpertsE = Expert.where("availability = ?", false)
 
@@ -110,6 +110,62 @@ class ExpertsController < ApplicationController
     end
   end
 
+  def limitedQualified
+    # manage limit in fair way - passes in array with experts of online experts
+    limit = 10
+    onlineExperts = params[:experts][:expert]
+    totalOnlineQExperts = Expert.where("availability = ? AND featured = ?", true, false)
+    # check that those are all still online
+    onlineExperts.each do |e|
+      if e.availability == false
+        onlineExperts = onlineExperts - [e]
+      end
+    end
+    # add experts
+    counter = 0
+    while onlineExperts.length <= limit 
+      onlineExperts.push(totalOnlineQExperts[counter])
+      counter += 1
+    end
+
+    @experts = Array.new
+
+    onlineExperts.each do |expert|
+      user = User.where("expert_id = ?", expert.id.to_s).first
+      if user
+        expertMap = {"expert" => expert, "user" => user}
+        @experts.push(expertMap)
+      end
+    end
+
+    
+    render :json => experts.to_json, :status => 200
+  end
+
+  def onlineQualifiedExperts
+    @experts = Expert.where("availability = ? AND featured = ?", true, false)
+
+    if @experts
+      render :json => {"result" => "success", "experts" => @experts}, :status => 200
+    else
+      render :json => {"result" => "failure"}, :status => 500
+    end
+  end
+
+  def randomQualifiedExpert
+    experts = Expert.where("availability = ? AND featured = ?", true, false)
+
+    length = experts.length
+    if length > 0
+      @expert = experts[rand(0..length)]
+      render :json => {"result" => "success", "expert" => @expert}, :status => 200
+    else
+      render :json {"result" => "failure", "reason" => "no experts online"}, :status => 200
+    end
+    
+
+  end
+
   def updateAvailability
     @expert = Expert.find(params[:expert_id])
 
@@ -128,6 +184,16 @@ class ExpertsController < ApplicationController
         @e = Error.new(:status => 400, :message => error_str)
         render :json => @e.to_json, :status => 400
     end
+  end
+
+  def updateExpert
+    @expert = Expert.find(params[:id])
+    @expert.max_load = params[:max_load].to_i
+
+    if @expert.save
+      render :json => {"result" => "success", "expert" => @expert.to_json}, :status => 200
+    else
+      render :json => {"result" => "failure"}
   end
 
   def newExpert
@@ -213,7 +279,7 @@ class ExpertsController < ApplicationController
 
   private
     def expertParams
-      params.require(:expert).permit(:specialty, :specialty2, :specialty3, :specialty4, :bio, :avatar, :email)
+      params.require(:expert).permit(:specialty, :specialty2, :specialty3, :specialty4, :bio, :avatar, :email, :featured)
     end
 
 

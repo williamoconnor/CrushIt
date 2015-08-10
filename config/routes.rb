@@ -1,14 +1,21 @@
 CrushIt::Application.routes.draw do
 
+  get "qualified_experts/new"
+  get "qualified_experts/create"
+  get "qualified_experts/pay"
+  get "qualified_experts/get_all_available"
   get "/experts/expert/:expert_id" => 'experts#show'
-  get "/experts/list/:specialty" => 'experts#list'
+  get "/experts/list/:specialty" => 'experts#listFeatured'
   put "/experts/expert/availability" => 'experts#updateAvailability'
   get "/experts/new" => 'experts#newExpert'
   post "/experts/create" => 'experts#createExpert'
   get "/experts/pay/:expert_id" => 'experts#payExpert'
   post "/experts/pay/:expert_id" => 'experts#submitPayment'
-  get "/experts/all" => 'experts#all'
+  get "/experts/all/featured" => 'experts#allFeatured'
+  post "/experts/all/qualified" => 'experts#limitedQualified'
   get "/experts/expert/:expert_id/profile-picture" => 'experts#getProfPic'
+  get "/experts/qualified/online" => 'experts#onlineQualifiedExperts'
+  get "/experts/qualified/random" => 'experts#randomQualifiedExpert'
 
   post "/users/signup" => 'users#signup'
   post "/users/signin" => 'users#signin'
@@ -33,8 +40,6 @@ CrushIt::Application.routes.draw do
   get "/chats/unrated/:user_id" => 'chats#unratedInactiveChats'
   put "/chats/renew/request" => 'chats#renewChatRequest'
   put "/chats/renew" => 'chats#renewChat'
-
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

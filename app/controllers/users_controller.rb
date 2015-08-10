@@ -30,8 +30,29 @@ class UsersController < ApplicationController
     password = params[:password]
 
     @user = User.find_by email: email
+    chats = []
+
+    if @user.blank
+      render :json => {"result" => "new user"}, :status => 200
+    end
+    
+    if @user.expert_id == 0
+      unratedInactiveChats = Chat.where("rating = ? AND active = ? AND userID = ?", 0, false, params[:userID])
+      activeChats = Chat.where("user_id = ? AND active = ?", @user.id, true)
+      activeChats.each do |chat|
+        expert = Expert.find(chat.expert_id)
+        chats.push({"expert" => expert, "chat" => chat})
+      end
+    elsif @user.id > 0
+      activeChats = Chat.where("expert_id = ? AND active = ?", @user.id, true)
+      activeChats.each do |chat|
+        expert = User.find(chat.user_id)
+        chats.push({"user" => user, "chat" => chat})
+      end
+    end
+
     if @user && @user.password == password
-      result = {"result" => "success", "user" => @user}
+      result = {"result" => "success", "user" => @user, "unrated_chats" => unratedInactiveChats, "chats" => chats}
   		render :json => result.to_json, :status => 200
   	elsif request.post?
       result = {"result" => "failure"}

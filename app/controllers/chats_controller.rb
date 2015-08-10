@@ -8,7 +8,7 @@ class ChatsController < ApplicationController
 		@chat.rating = 0
 		@chat.dialog_id = ""
 
-		@existingChat = Chat.where("active = ? AND userID = ? AND expertID = ?", true, @chat.user_id, @chat.expert_id)
+		@existingChat = Chat.where("active = ? AND user_id = ? AND expert_id = ?", true, @chat.user_id, @chat.expert_id)
 		if !existingChat.blank?
 			result = {"new" => false, "chat" => @chat}
 			render :json => result.to_json, :status => 200
@@ -86,12 +86,12 @@ class ChatsController < ApplicationController
 	end
 
 	def userActiveChats
-		@chats = Chat.where("userID = ? AND active = ?", params[:userID], true)
+		@chats = Chat.where("user_id = ? AND active = ?", params[:user_id], true)
 		@experts = Array.new
 		@chats.each do |chat|
-			expertID = chat.expertID
-			expertInfo = Expert.find(expertID)
-			userInfo = User.where("expertID = ?", expertID).first
+			expert_id = chat.expert_id
+			expertInfo = Expert.find(expert_id)
+			userInfo = User.where("expert_id = ?", expert_id).first
 			expert = {"user" => userInfo, "expert" => expertInfo}
 			@experts.push(expert)
 		end
@@ -105,11 +105,11 @@ class ChatsController < ApplicationController
 	end
 
 	def expertActiveChats
-		@chats = Chat.where("expertID = ? AND active = ?", params[:expertID], true)
+		@chats = Chat.where("expert_id = ? AND active = ?", params[:expert_id], true)
 		@users = Array.new
 		@chats.each do |chat|
-			userID = chat.userID
-			userInfo = User.find(userID)
+			user_id = chat.user_id
+			userInfo = User.find(user_id)
 			@users.push(userInfo)
 		end
 		if @chats && @users
@@ -122,7 +122,7 @@ class ChatsController < ApplicationController
 	end
 
 	def unratedInactiveChats
-		@unratedChats = Chat.where("rating = ? AND active = ? AND userID = ?", 0, false, params[:userID])
+		@unratedChats = Chat.where("rating = ? AND active = ? AND user_id = ?", 0, false, params[:user_id])
 
 		if @unratedChats.blank?
 			result = {"empty" => true}
