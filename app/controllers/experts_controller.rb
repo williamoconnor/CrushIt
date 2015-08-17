@@ -160,7 +160,7 @@ class ExpertsController < ApplicationController
       @expert = experts[rand(0..length)]
       render :json => {"result" => "success", "expert" => @expert}, :status => 200
     else
-      render :json {"result" => "failure", "reason" => "no experts online"}, :status => 200
+      render :json => {"result" => "failure", "reason" => "no experts online"}, :status => 200
     end
     
 
