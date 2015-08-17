@@ -194,6 +194,7 @@ class ExpertsController < ApplicationController
       render :json => {"result" => "success", "expert" => @expert.to_json}, :status => 200
     else
       render :json => {"result" => "failure"}
+    end
   end
 
   def newExpert
@@ -281,6 +282,4 @@ class ExpertsController < ApplicationController
     def expertParams
       params.require(:expert).permit(:specialty, :specialty2, :specialty3, :specialty4, :bio, :avatar, :email, :featured)
     end
-
-
 end
