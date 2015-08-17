@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     @user = User.find_by email: email
     chats = []
 
-    if @user.blank
+    if @user.blank?
       render :json => {"result" => "new user"}, :status => 200
     end
     
@@ -147,7 +147,7 @@ class UsersController < ApplicationController
     @user.correspondences += params[:correspondences]
 
     if @user.save
-          render :json => @user.to_json, :status => 200
+          render :json => {"success" => true, "user" => @user}, :status => 200
       else
           error_str = ""
 
@@ -157,7 +157,7 @@ class UsersController < ApplicationController
           puts error_str
                     
           @e = Error.new(:status => 400, :message => error_str)
-          render :json => @e.to_json, :status => 400
+          render :json => {"success" => false, "error" => @e}, :status => 400
       end
   end
 
