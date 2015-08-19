@@ -1,7 +1,7 @@
 <div class="container">  
   <div class="title">
     <h1 id="crush-it-title"> CrushIt! </h1>
-    <p>Expert Sign Up Form</p>
+    <p>Qualified Expert Sign Up Form</p>
   </div>
   <div class="instructions">
     <h3>Instructions</h3>
@@ -12,19 +12,11 @@
     <br/>
     <%= text_field :expert, :email, :class => 'form-item' %>
     <br/>
-    <%= f.label :bio_label, "Expert Bio", :class => 'form-label' %>
-    <br/>
-    <%= text_area :expert, :bio, cols: 40, rows: 10, :maxlength => 250, :class => 'form-item' %>
-    <br/>
-    <%= f.label :photo_label, "Profile Picture", :class => 'form-label' %>
-    <br/>
-    <%= f.file_field :avatar, :class => 'form-item' %>
-    <br/>
     <%= f.label :password, "Password - You should have received a password from CrushIt", :class => 'form-label' %>
     <br/>
     <%= text_field :post, :passcode, :class => 'form-item' %>
     <br/>
-    <%= f.hidden_field :featured, :value => true %>
+    <%= f.hidden_field :featured, :value => false %>
     <%= f.submit ("Submit"), :class => 'form-item', :id => 'submit-button' %>
   <% end %>
 </div>

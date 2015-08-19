@@ -8,6 +8,7 @@ CrushIt::Application.routes.draw do
   get "/experts/list/:specialty" => 'experts#listFeatured'
   put "/experts/expert/availability" => 'experts#updateAvailability'
   get "/experts/new" => 'experts#newExpert'
+  get "/experts/qualified/new" => 'experts#newQualifiedExpert'
   post "/experts/create" => 'experts#createExpert'
   get "/experts/pay/:expert_id" => 'experts#payExpert'
   post "/experts/pay/:expert_id" => 'experts#submitPayment'

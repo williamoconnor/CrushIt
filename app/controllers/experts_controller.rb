@@ -201,6 +201,10 @@ class ExpertsController < ApplicationController
     @expert = Expert.new()
   end
 
+  def newQualifiedExpert
+    @expert = Expert.new()
+  end
+
   def createExpert
     if params[:post][:passcode] == 'password'
       @expert = Expert.new(expertParams)
@@ -210,7 +214,7 @@ class ExpertsController < ApplicationController
       @expert.correspondences = 0
       @expert.unpaid_correspondences = 0
       @expert.availability = false
-
+      
       if @expert.save
           user = User.find_by email: params[:expert][:email]
           if user
@@ -228,7 +232,7 @@ class ExpertsController < ApplicationController
           }
           puts error_str
                     
-          @e = Error.new(:status => 400, :message => error_str)
+          @e = {:status => 400, :message => error_str}
           render :json => @e.to_json, :status => 400
       end    
     else
